@@ -45,8 +45,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, dom, fileinfo, mysql, pdo_mysql, zip
-          coverage: pcov
-          ini-values: pcov.directory=.
+          coverage: none
 
       - name: Cache Composer dependencies
         uses: actions/cache@v4
@@ -67,5 +66,5 @@ jobs:
       - name: Run database migrations
         run: php artisan migrate --force
 
-      - name: Run tests with coverage
-        run: composer test:ci
+      - name: Run tests
+        run: composer test
