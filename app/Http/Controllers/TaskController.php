@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -30,17 +32,9 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:todo,in_progress,done',
-            'priority' => 'required|in:low,medium,high',
-            'due_date' => 'nullable|date',
-        ]);
-
-        Task::create($validated);
+        Task::create($request->validated());
 
         return redirect()->route('tasks.index')->with('success', 'Tâche créée avec succès !');
     }
@@ -59,19 +53,11 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateTaskRequest $request, string $id)
     {
         $task = Task::findOrFail($id);
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:todo,in_progress,done',
-            'priority' => 'required|in:low,medium,high',
-            'due_date' => 'nullable|date',
-        ]);
-
-        $task->update($validated);
+        $task->update($request->validated());
 
         return redirect()->route('tasks.index')->with('success', 'Tâche mise à jour avec succès !');
     }
