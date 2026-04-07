@@ -6,6 +6,7 @@ FROM composer:2.6 AS build
 WORKDIR /app
 
 COPY composer.json composer.lock ./
+
 RUN composer install \
     --no-dev \
     --no-interaction \
@@ -46,8 +47,13 @@ WORKDIR /var/www/html
 # Copier l'application depuis le stage build
 COPY --from=build /app /var/www/html
 
-# Répertoire de stockage accessible en écriture
-RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache
+# Créer dossiers nécessaires Laravel
+RUN mkdir -p \
+    storage/logs \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    bootstrap/cache
 
 # Sécurité : utilisateur non-root
 RUN addgroup -g 1000 -S www && \
