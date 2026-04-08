@@ -4,6 +4,18 @@ Tous les changements notables de ce projet sont documentés ici.
 
 ## [Unreleased]
 
+### Added
+- feat(vues): ajout de la vue index avec liste des tâches et filtres par statut
+- feat(vues): ajout de la vue create avec formulaire de création de tâche
+- feat(docker): ajout du Dockerfile multi-stage (Composer + PHP 8.2 FPM Alpine)
+- feat(docker): ajout du docker-compose.yml avec les services app, nginx, mysql et redis
+- feat(docker): ajout de la configuration Nginx pour servir Laravel via PHP-FPM
+- feat(ci): ajout du job frontend dans la pipeline CI (build Vite + upload artifact)
+- feat(ci): ajout du workflow docker-publish.yml pour la publication automatique sur GHCR
+
+### Fixed
+- fix(docker): correction du Dockerfile avec --no-scripts pour éviter l'erreur post-autoload-dump
+
 ## [1.0.0] - 2026-04-05
 
 ### Added
