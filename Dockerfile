@@ -11,10 +11,12 @@ RUN composer install \
     --no-dev \
     --no-interaction \
     --no-progress \
-    --optimize-autoloader \
+    --no-scripts \
     --prefer-dist
 
 COPY . .
+
+RUN composer dump-autoload --optimize --no-scripts
 
 # ==============================
 # Stage 2 : Image de production
