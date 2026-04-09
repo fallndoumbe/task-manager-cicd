@@ -32,6 +32,9 @@ RUN apk add --no-cache \
         libzip-dev \
         icu-dev \
         oniguruma-dev \
+        autoconf \
+        g++ \
+        make \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install \
         pdo_mysql \
@@ -42,7 +45,10 @@ RUN apk add --no-cache \
         gd \
         zip \
         intl \
-        opcache
+        opcache \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del autoconf g++ make
 
 WORKDIR /var/www/html
 
